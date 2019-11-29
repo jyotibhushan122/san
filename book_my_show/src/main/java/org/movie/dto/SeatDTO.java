@@ -15,9 +15,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name = "tbl_screen")
-public class ScreenDTO implements Serializable {
-
+@Entity(name = "tbl_seat")
+public class SeatDTO implements Serializable {
 	/**
 	 * 
 	 */
@@ -25,48 +24,17 @@ public class ScreenDTO implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
-	private String screenName;
+	private int row;
+	private int number;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "theater_id", nullable = false)
+	@JoinColumn(name = "screen_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
-	private TheaterDTO theaterId;
+	private ScreenDTO screenDTO;
+	private boolean isBooked;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "movie_id", nullable = false)
+	@JoinColumn(name = "reservation_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
-	private MovieDTO movieId;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getScreenName() {
-		return screenName;
-	}
-
-	public void setScreenName(String screenName) {
-		this.screenName = screenName;
-	}
-
-	public TheaterDTO getTheaterId() {
-		return theaterId;
-	}
-
-	public void setTheaterId(TheaterDTO theaterId) {
-		this.theaterId = theaterId;
-	}
-
-	public MovieDTO getMovieId() {
-		return movieId;
-	}
-
-	public void setMovieId(MovieDTO movieId) {
-		this.movieId = movieId;
-	}
-
+	private ReservationDTO reservationDTO;
 }

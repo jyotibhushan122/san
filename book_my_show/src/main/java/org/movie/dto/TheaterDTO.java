@@ -19,6 +19,15 @@ public class TheaterDTO implements Serializable {
 	private Long id;
 	private String theaterName;
 	private String address;
+	private Integer seatNumber;
+
+	public Integer getSeatNumber() {
+		return seatNumber;
+	}
+
+	public void setSeatNumber(Integer seatNumber) {
+		this.seatNumber = seatNumber;
+	}
 
 	public Long getId() {
 		return id;
