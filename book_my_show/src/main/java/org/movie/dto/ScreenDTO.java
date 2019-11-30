@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.movie.constent.ScreenConstent;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -23,7 +24,7 @@ public class ScreenDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String screenName;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -32,10 +33,11 @@ public class ScreenDTO implements Serializable {
 	@JsonIgnore
 	private TheaterDTO theaterId;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "movie_id", nullable = false)
+	@JoinColumn(name = "movie_id", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private MovieDTO movieId;
+	private ScreenConstent screen;
 
 	public Long getId() {
 		return id;
@@ -67,6 +69,14 @@ public class ScreenDTO implements Serializable {
 
 	public void setMovieId(MovieDTO movieId) {
 		this.movieId = movieId;
+	}
+
+	public ScreenConstent getScreen() {
+		return screen;
+	}
+
+	public void setScreen(ScreenConstent screen) {
+		this.screen = screen;
 	}
 
 }
