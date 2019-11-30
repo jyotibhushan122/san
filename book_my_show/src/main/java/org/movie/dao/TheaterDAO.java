@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TheaterDAO extends JpaRepository<TheaterDTO, TheaterVO> {
-
+	boolean existsById(Long id);
 }
