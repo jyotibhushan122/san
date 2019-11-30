@@ -1,4 +1,4 @@
-package org.movie.serviceImpl;
+package org.movie.serviceimpl;
 
 import java.util.Optional;
 

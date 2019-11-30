@@ -1,6 +1,7 @@
 package org.movie.mapper;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import org.movie.dto.MovieDTO;
 import org.movie.vo.MovieVO;
@@ -23,5 +24,21 @@ public class MovieMapper {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+	
+	public MovieDTO convertVO(MovieVO vo) {
+		MovieVO movieVO = new MovieVO();
+		MovieDTO dto = new MovieDTO();
+		funPoint(vo.getMovieName(), dto::setMovieName);
+		funPoint(vo.getDescription(), dto::setDescription);
+		funPoint(vo.getTitle(), dto::setTitle);
+		return dto;
+	}
+
+	public <T> void funPoint(T value, Consumer<T> consumer) {
+		if (value != null) {
+			consumer.accept(value);
+		}
+
 	}
 }

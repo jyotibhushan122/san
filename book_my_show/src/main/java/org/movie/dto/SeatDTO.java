@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.movie.constent.SeatStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,6 +35,21 @@ public class SeatDTO implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private ScreenDTO screenId;
+	private SeatStatus seatStatus;
+
+	/**
+	 * @return the seatStatus
+	 */
+	public SeatStatus getSeatStatus() {
+		return seatStatus;
+	}
+
+	/**
+	 * @param seatStatus the seatStatus to set
+	 */
+	public void setSeatStatus(SeatStatus seatStatus) {
+		this.seatStatus = seatStatus;
+	}
 
 	public Long getId() {
 		return id;
