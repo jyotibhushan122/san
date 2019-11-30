@@ -38,6 +38,36 @@ public class ScreenDTO implements Serializable {
 	@JsonIgnore
 	private MovieDTO movieId;
 	private ScreenConstent screen;
+	private String showProfile;
+	private String time;
+
+	/**
+	 * @return the showProfile
+	 */
+	public String getShowProfile() {
+		return showProfile;
+	}
+
+	/**
+	 * @param showProfile the showProfile to set
+	 */
+	public void setShowProfile(String showProfile) {
+		this.showProfile = showProfile;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public String getTime() {
+		return time;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(String time) {
+		this.time = time;
+	}
 
 	public Long getId() {
 		return id;

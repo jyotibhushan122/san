@@ -1,7 +1,7 @@
 package org.movie.constent;
 
 public enum TimeConstent {
-	IST_SHOW("10:00", "01:00");
+	IST_SHOW("10:00", "01:00"),SECOND_SHOW("02:00", "05:00"),THIRD_SHOW("06:00", "09:00");
 
 	private String startTime;
 	private String endTime;
@@ -26,5 +26,7 @@ public enum TimeConstent {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
+	
+	
 	
 }
