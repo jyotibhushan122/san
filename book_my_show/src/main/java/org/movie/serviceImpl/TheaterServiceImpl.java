@@ -1,4 +1,4 @@
-package org.movie.serviceimpl;
+package org.movie.serviceImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,14 +56,14 @@ public class TheaterServiceImpl implements TheaterService {
 					screen.setShowProfile(k);
 					screen.setTime(v);
 					screenSave = screenDao.save(screen);
-
 				});
-				genSeat(t, s, screenSave);
+
 			});
+			genSeat(t, screenSave);
 		});
 	}
 
-	private void genSeat(TheaterDTO t, ScreenConstent s, ScreenDTO screen) {
+	private void genSeat(TheaterDTO t, ScreenDTO screen) {
 		List<SeatDTO> listOfSeatDTO = new ArrayList<>();
 		for (int i = 0; i < t.getSeatNumber(); i++) {
 			SeatDTO seatDto = new SeatDTO();

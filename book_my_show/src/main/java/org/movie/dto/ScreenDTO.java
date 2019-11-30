@@ -27,47 +27,22 @@ public class ScreenDTO implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String screenName;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "theater_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private TheaterDTO theaterId;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "movie_id", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private MovieDTO movieId;
+
 	private ScreenConstent screen;
 	private String showProfile;
 	private String time;
-
-	/**
-	 * @return the showProfile
-	 */
-	public String getShowProfile() {
-		return showProfile;
-	}
-
-	/**
-	 * @param showProfile the showProfile to set
-	 */
-	public void setShowProfile(String showProfile) {
-		this.showProfile = showProfile;
-	}
-
-	/**
-	 * @return the time
-	 */
-	public String getTime() {
-		return time;
-	}
-
-	/**
-	 * @param time the time to set
-	 */
-	public void setTime(String time) {
-		this.time = time;
-	}
 
 	public Long getId() {
 		return id;
@@ -107,6 +82,22 @@ public class ScreenDTO implements Serializable {
 
 	public void setScreen(ScreenConstent screen) {
 		this.screen = screen;
+	}
+
+	public String getShowProfile() {
+		return showProfile;
+	}
+
+	public void setShowProfile(String showProfile) {
+		this.showProfile = showProfile;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 }
