@@ -2,8 +2,6 @@ package org.movie.vo;
 
 import java.io.Serializable;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class TheaterVO implements Serializable {
 
 	/**
@@ -12,7 +10,16 @@ public class TheaterVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String theaterName;
 	private String address;
-	
+	private Integer seatNumber;
+
+	public Integer getSeatNumber() {
+		return seatNumber;
+	}
+
+	public void setSeatNumber(Integer seatNumber) {
+		this.seatNumber = seatNumber;
+	}
+
 	public String getTheaterName() {
 		return theaterName;
 	}

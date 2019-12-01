@@ -1,6 +1,7 @@
 package org.movie.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,19 +36,28 @@ public class SeatDTO implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private ScreenDTO screenId;
-	private SeatStatus seatStatus;
+	private String seatStatus;
+	private LocalDate reservedDate;
+
+	public LocalDate getReservedDate() {
+		return reservedDate;
+	}
+
+	public void setReservedDate(LocalDate reservedDate) {
+		this.reservedDate = reservedDate;
+	}
 
 	/**
 	 * @return the seatStatus
 	 */
-	public SeatStatus getSeatStatus() {
+	public String getSeatStatus() {
 		return seatStatus;
 	}
 
 	/**
 	 * @param seatStatus the seatStatus to set
 	 */
-	public void setSeatStatus(SeatStatus seatStatus) {
+	public void setSeatStatus(String seatStatus) {
 		this.seatStatus = seatStatus;
 	}
 

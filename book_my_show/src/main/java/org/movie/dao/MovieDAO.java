@@ -11,5 +11,7 @@ import org.springframework.stereotype.Repository;
 public interface MovieDAO extends JpaRepository<MovieDTO, MovieVO> {
 
 	Optional<MovieDTO> findByMovieName(String movieName);
-	
+
+	Optional<MovieDTO> findById(Long id);
+
 }

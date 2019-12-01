@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 import org.movie.dto.MovieDTO;
+import org.movie.dto.TheaterDTO;
 import org.movie.vo.MovieVO;
+import org.movie.vo.TheaterVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -17,17 +19,24 @@ public class MovieMapper {
 		try {
 			if (vo.getImg() == null || !vo.getImg().getContentType().startsWith("image"))
 				throw new Exception("please pass movie image");
-
 			dto.setData(vo.getImg().getBytes());
+			dto.setFileName(vo.getImg().getOriginalFilename());
+			dto.setFileContentType(vo.getImg().getContentType());
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return dto;
 	}
-	
+
+	public MovieVO mapMovieDtoToVO(MovieDTO dto) {
+		MovieVO vo = new MovieVO();
+		BeanUtils.copyProperties(dto, vo);
+		return vo;
+	}
+
 	public MovieDTO convertVO(MovieVO vo) {
-		MovieVO movieVO = new MovieVO();
 		MovieDTO dto = new MovieDTO();
 		funPoint(vo.getMovieName(), dto::setMovieName);
 		funPoint(vo.getDescription(), dto::setDescription);
@@ -40,5 +49,17 @@ public class MovieMapper {
 			consumer.accept(value);
 		}
 
+	}
+
+	public TheaterDTO thaterMapperVoToDto(TheaterVO vo) {
+		TheaterDTO dto = new TheaterDTO();
+		BeanUtils.copyProperties(vo, dto);
+		return dto;
+	}
+
+	public TheaterVO thaterMapperDtoToVo(TheaterDTO vo) {
+		TheaterVO dto = new TheaterVO();
+		BeanUtils.copyProperties(vo, dto);
+		return dto;
 	}
 }

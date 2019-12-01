@@ -1,16 +1,34 @@
 package org.movie.vo;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+ * @author shiv
+ *
+ */
 public class MovieVO implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private Long id;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	private String movieName;
 	private String title;
 	private String description;
@@ -18,6 +36,28 @@ public class MovieVO implements Serializable {
 	private Long theaterId;
 	private Long screenId;
 	private MultipartFile img;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate validFrom;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate validTo;
+
+	public LocalDate getValidFrom() {
+		return validFrom;
+	}
+
+	public void setValidFrom(LocalDate validFrom) {
+		this.validFrom = validFrom;
+	}
+
+	public LocalDate getValidTo() {
+		return validTo;
+	}
+
+	public void setValidTo(LocalDate validTo) {
+		this.validTo = validTo;
+	}
 
 	public String getMovieName() {
 		return movieName;
@@ -75,4 +115,10 @@ public class MovieVO implements Serializable {
 		this.screenId = screenId;
 	}
 
+	@Override
+	public String toString() {
+		return "MovieVO [movieName=" + movieName + ", title=" + title + ", description=" + description + ", cast="
+				+ cast + ", theaterId=" + theaterId + ", screenId=" + screenId + ", img=" + img + ", validFrom="
+				+ validFrom + ", validTo=" + validTo + "]";
+	}
 }

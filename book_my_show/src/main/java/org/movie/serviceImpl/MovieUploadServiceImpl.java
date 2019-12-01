@@ -1,6 +1,8 @@
 package org.movie.serviceImpl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.movie.dao.MovieDAO;
 import org.movie.dao.ScreenDAO;
@@ -26,18 +28,33 @@ public class MovieUploadServiceImpl implements MovieUploadService {
 
 	@Override
 	public void uploadMovie(MovieVO vo) throws Exception {
-		Optional<ScreenDTO> screeData = screenDao.findById(vo.getScreenId());
-		if (screeData.isPresent() && screeData.get().getTheaterId().getId() == vo.getTheaterId()) {
-			MovieDTO dto = movierepo.save(movieMapper.mapMovieVoToMovieDTO(vo));
-			screeData.get().setMovieId(dto);
-			screenDao.save(screeData.get());
-		} else {
-			throw new Exception("Invalid screen");
-		}
+		movierepo.save(movieMapper.mapMovieVoToMovieDTO(vo));
+	}
+
+	@Override
+	public List<MovieVO> getAllMovie() {
+		return movierepo.findAll().stream().map(m -> movieMapper.mapMovieDtoToVO(m)).collect(Collectors.toList());
 	}
 
 	@Override
 	public void bookMovie() {
+
+	}
+
+	@Override
+	public void addMovieToScreen(MovieVO vo) throws Exception {
+		Optional<ScreenDTO> screen = screenDao.findById(vo.getScreenId());
+
+		if (screen.isPresent() && screen.get().getTheaterId().getId() == vo.getTheaterId()) {
+			Optional<MovieDTO> movie = movierepo.findById(vo.getId());
+			screen.get().setMovieId(movie.get().getId());
+			screen.get().setValidFrom(vo.getValidFrom());
+			screen.get().setValidTo(vo.getValidTo());
+			screenDao.save(screen.get());
+
+		} else {
+			throw new Exception("screen not valid.");
+		}
 
 	}
 

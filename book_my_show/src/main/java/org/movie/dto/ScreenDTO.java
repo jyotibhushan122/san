@@ -1,7 +1,10 @@
 package org.movie.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,11 +16,21 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.movie.constent.ScreenConstent;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "tbl_screen")
 public class ScreenDTO implements Serializable {
+
+	public long getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(long movieId) {
+		this.movieId = movieId;
+	}
 
 	/**
 	 * 
@@ -29,20 +42,60 @@ public class ScreenDTO implements Serializable {
 	private String screenName;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "theater_id", nullable = false)
+	@JoinColumn(name = "theater_id", nullable = true)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private TheaterDTO theaterId;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "movie_id", nullable = true)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	private MovieDTO movieId;
+	/*
+	 * @ManyToOne(fetch = FetchType.LAZY, optional = false)
+	 * 
+	 * @JoinColumn(name = "movie_id", unique = true, nullable = true, insertable =
+	 * true, updatable = true)
+	 * 
+	 * @OnDelete(action = OnDeleteAction.CASCADE)
+	 * 
+	 * private MovieDTO movieId;
+	 */
+
+	private long movieId;
 
 	private ScreenConstent screen;
 	private String showProfile;
 	private String time;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate bookedShowDate;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate validFrom;
+	@JsonFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate validTo;
+
+	public LocalDate getValidFrom() {
+		return validFrom;
+	}
+
+	public void setValidFrom(LocalDate validFrom) {
+		this.validFrom = validFrom;
+	}
+
+	public LocalDate getValidTo() {
+		return validTo;
+	}
+
+	public void setValidTo(LocalDate validTo) {
+		this.validTo = validTo;
+	}
+
+	public LocalDate getBookedShowDate() {
+		return bookedShowDate;
+	}
+
+	public void setBookedShowDate(LocalDate bookedShowDate) {
+		this.bookedShowDate = bookedShowDate;
+	}
 
 	public Long getId() {
 		return id;
@@ -66,14 +119,6 @@ public class ScreenDTO implements Serializable {
 
 	public void setTheaterId(TheaterDTO theaterId) {
 		this.theaterId = theaterId;
-	}
-
-	public MovieDTO getMovieId() {
-		return movieId;
-	}
-
-	public void setMovieId(MovieDTO movieId) {
-		this.movieId = movieId;
 	}
 
 	public ScreenConstent getScreen() {

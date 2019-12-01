@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.movie.constent.ScreenConstent;
 import org.movie.constent.SeatStatus;
@@ -16,9 +17,9 @@ import org.movie.dao.TheaterDAO;
 import org.movie.dto.ScreenDTO;
 import org.movie.dto.SeatDTO;
 import org.movie.dto.TheaterDTO;
+import org.movie.mapper.MovieMapper;
 import org.movie.service.TheaterService;
 import org.movie.vo.TheaterVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,16 +32,13 @@ public class TheaterServiceImpl implements TheaterService {
 	private ScreenDAO screenDao;
 	@Autowired
 	private SeatDao seatDao;
+	@Autowired
+	private MovieMapper movieMapper;
 
 	@Override
 	public List<TheaterVO> getTheaters() {
-		List<TheaterVO> theatersVO = new ArrayList<>();
-		List<TheaterDTO> theaters = theaterDAO.findAll();
-		BeanUtils.copyProperties(theaters, theatersVO);
-		return theatersVO;
+		return theaterDAO.findAll().stream().map(r -> movieMapper.thaterMapperDtoToVo(r)).collect(Collectors.toList());
 	}
-
-	private ScreenDTO screenSave = null;
 
 	@Override
 	public void addScreen() {
@@ -55,11 +53,10 @@ public class TheaterServiceImpl implements TheaterService {
 					screen.setScreen(s);
 					screen.setShowProfile(k);
 					screen.setTime(v);
-					screenSave = screenDao.save(screen);
+					ScreenDTO screenSave = screenDao.save(screen);
+					genSeat(t, screenSave);
 				});
-
 			});
-			genSeat(t, screenSave);
 		});
 	}
 
@@ -68,7 +65,7 @@ public class TheaterServiceImpl implements TheaterService {
 		for (int i = 0; i < t.getSeatNumber(); i++) {
 			SeatDTO seatDto = new SeatDTO();
 			seatDto.setScreenId(screen);
-			seatDto.setSeatStatus(SeatStatus.SEAT_NOT_BOOKED);
+			seatDto.setSeatStatus(SeatStatus.SEAT_NOT_BOOKED.toString());
 			seatDto.setNumber(i);
 			setSeatType(i, seatDto);
 			listOfSeatDTO.add(seatDto);
@@ -78,15 +75,15 @@ public class TheaterServiceImpl implements TheaterService {
 	}
 
 	public void setSeatType(int i, SeatDTO seatDto) {
-		if (0 <= i && i >= 10) {
+		if (0 <= i && i < 10) {
 			seatDto.setSeries("A");
 			seatDto.setSeatType(SeatType.NORMAL.toString());
 			seatDto.setAmmount(SeatType.NORMAL.getPrice());
-		} else if (11 <= i && i >= 20) {
+		} else if (11 <= i && i < 20) {
 			seatDto.setSeries("B");
 			seatDto.setSeatType(SeatType.EXECUTIVE.toString());
 			seatDto.setAmmount(SeatType.EXECUTIVE.getPrice());
-		} else if (21 <= i && i >= 30) {
+		} else if (21 <= i && i < 30) {
 			seatDto.setSeries("C");
 			seatDto.setSeatType(SeatType.PREMIUM.toString());
 			seatDto.setAmmount(SeatType.PREMIUM.getPrice());
@@ -106,6 +103,11 @@ public class TheaterServiceImpl implements TheaterService {
 		});
 
 		return time;
+	}
+
+	@Override
+	public void addTheater(TheaterVO vo) throws Exception {
+		theaterDAO.save(movieMapper.thaterMapperVoToDto(vo));
 	}
 
 }
