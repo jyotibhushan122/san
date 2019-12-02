@@ -25,6 +25,8 @@ import org.movie.mapper.MovieMapper;
 import org.movie.service.TheaterService;
 import org.movie.util.DateUtil;
 import org.movie.vo.MovieVO;
+import org.movie.vo.ResponseVo;
+import org.movie.vo.SeatVo;
 import org.movie.vo.TheaterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -144,6 +146,31 @@ public class TheaterServiceImpl implements TheaterService {
 			throw new Exception("Please pass valid data");
 		}
 
+	}
+
+	@Override
+	public List<ResponseVo> getScreenForBooked(MovieVO vo) throws Exception {
+		Optional<TheaterDTO> thDto = theaterDAO.findById(vo.getTheaterId());
+		if (!thDto.isPresent())
+			throw new Exception("Theater Data not valid");
+		List<ScreenDTO> dto = screenDao.findAllByTheaterIdAndMovieId(thDto.get(), vo.getId());
+		List<SeatDTO> seatDto = seatDao
+				.findAllByScreenIdIn(screenDao.findAllByTheaterIdAndMovieId(thDto.get(), vo.getId()));
+
+		if (CollectionUtils.isEmpty(dto))
+			throw new Exception("Screens Not find");
+		if (CollectionUtils.isEmpty(seatDto))
+			throw new Exception("Seat Not found");
+		List<ResponseVo> responseVo = new ArrayList<>();
+		dto.forEach(r -> {
+			ResponseVo response = new ResponseVo();
+			response.setVo(movieMapper.getMapScreenDtoToVo(r));
+			List<SeatVo> seat = seatDto.stream().filter(f -> f.getScreenId().getId() == r.getId())
+					.map(m -> movieMapper.getMapSeatDtoToVo(m)).collect(Collectors.toList());
+			response.setSatVo(seat);
+			responseVo.add(response);
+		});
+		return null;
 	}
 
 }

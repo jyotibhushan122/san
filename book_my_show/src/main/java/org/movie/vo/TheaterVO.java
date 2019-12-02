@@ -8,6 +8,7 @@ public class TheaterVO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String id;
 	private String theaterName;
 	private String address;
 	private Integer seatNumber;
@@ -34,6 +35,14 @@ public class TheaterVO implements Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 }

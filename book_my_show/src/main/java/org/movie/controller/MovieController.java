@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/admin_page")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin
 public class MovieController {
 	private Logger logger = LoggerFactory.getLogger(MovieController.class);
 	@Autowired

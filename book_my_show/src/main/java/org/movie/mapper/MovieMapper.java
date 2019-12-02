@@ -5,8 +5,12 @@ import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 import org.movie.dto.MovieDTO;
+import org.movie.dto.ScreenDTO;
+import org.movie.dto.SeatDTO;
 import org.movie.dto.TheaterDTO;
 import org.movie.vo.MovieVO;
+import org.movie.vo.ScreenVO;
+import org.movie.vo.SeatVo;
 import org.movie.vo.TheaterVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -63,5 +67,18 @@ public class MovieMapper {
 		TheaterVO dto = new TheaterVO();
 		BeanUtils.copyProperties(vo, dto);
 		return dto;
+	}
+
+	public ScreenVO getMapScreenDtoToVo(ScreenDTO dto) {
+		ScreenVO vo = new ScreenVO();
+		BeanUtils.copyProperties(dto, vo);
+		return vo;
+
+	}
+
+	public SeatVo getMapSeatDtoToVo(SeatDTO dto) {
+		SeatVo vo = new SeatVo();
+		BeanUtils.copyProperties(dto, vo);
+		return vo;
 	}
 }

@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.movie.constent.ScreenConstent;
+import org.movie.dto.ScreenDTO;
 import org.movie.dto.TheaterDTO;
 import org.movie.vo.MovieVO;
+import org.movie.vo.ResponseVo;
 import org.movie.vo.TheaterVO;
 
 public interface TheaterService {
@@ -18,5 +20,7 @@ public interface TheaterService {
 	void addScreen(MovieVO vo, TheaterDTO dto, List<ScreenConstent> screenContent);
 
 	void addMovieToScreen(MovieVO vo) throws Exception;
+
+	public List<ResponseVo> getScreenForBooked(MovieVO vo) throws Exception;
 
 }
