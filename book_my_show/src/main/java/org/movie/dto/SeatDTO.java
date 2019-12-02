@@ -13,12 +13,12 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.movie.constent.SeatStatus;
+import org.movie.util.AuditModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "tbl_seat")
-public class SeatDTO implements Serializable {
+public class SeatDTO extends AuditModel implements Serializable {
 
 	/**
 	 * 
@@ -37,15 +37,8 @@ public class SeatDTO implements Serializable {
 	@JsonIgnore
 	private ScreenDTO screenId;
 	private String seatStatus;
-	private LocalDate reservedDate;
-
-	public LocalDate getReservedDate() {
-		return reservedDate;
-	}
-
-	public void setReservedDate(LocalDate reservedDate) {
-		this.reservedDate = reservedDate;
-	}
+	private LocalDate slotDate;
+	private boolean isBooked;
 
 	/**
 	 * @return the seatStatus
@@ -107,6 +100,22 @@ public class SeatDTO implements Serializable {
 
 	public void setScreenId(ScreenDTO screenId) {
 		this.screenId = screenId;
+	}
+
+	public boolean isBooked() {
+		return isBooked;
+	}
+
+	public void setBooked(boolean isBooked) {
+		this.isBooked = isBooked;
+	}
+
+	public LocalDate getSlotDate() {
+		return slotDate;
+	}
+
+	public void setSlotDate(LocalDate slotDate) {
+		this.slotDate = slotDate;
 	}
 
 }

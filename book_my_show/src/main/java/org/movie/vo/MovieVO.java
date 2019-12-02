@@ -21,18 +21,10 @@ public class MovieVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	private String movieName;
 	private String title;
 	private String description;
-	private List<String> cast;
+	private String cast;
 	private Long theaterId;
 	private Long screenId;
 	private MultipartFile img;
@@ -42,7 +34,9 @@ public class MovieVO implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate validTo;
-
+	private String screenName;
+	private String slotTime;
+	private byte[] data;
 	public LocalDate getValidFrom() {
 		return validFrom;
 	}
@@ -83,11 +77,11 @@ public class MovieVO implements Serializable {
 		this.description = description;
 	}
 
-	public List<String> getCast() {
+	public String getCast() {
 		return cast;
 	}
 
-	public void setCast(List<String> cast) {
+	public void setCast(String cast) {
 		this.cast = cast;
 	}
 
@@ -121,4 +115,37 @@ public class MovieVO implements Serializable {
 				+ cast + ", theaterId=" + theaterId + ", screenId=" + screenId + ", img=" + img + ", validFrom="
 				+ validFrom + ", validTo=" + validTo + "]";
 	}
+
+	public String getScreenName() {
+		return screenName;
+	}
+
+	public void setScreenName(String screenName) {
+		this.screenName = screenName;
+	}
+
+	public String getSlotTime() {
+		return slotTime;
+	}
+
+	public void setSlotTime(String slotTime) {
+		this.slotTime = slotTime;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
 }

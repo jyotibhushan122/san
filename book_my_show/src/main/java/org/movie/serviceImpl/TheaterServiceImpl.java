@@ -1,27 +1,34 @@
 package org.movie.serviceImpl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.movie.constent.ScreenConstent;
 import org.movie.constent.SeatStatus;
 import org.movie.constent.SeatType;
 import org.movie.constent.TimeConstent;
+import org.movie.dao.MovieDAO;
 import org.movie.dao.ScreenDAO;
 import org.movie.dao.SeatDao;
 import org.movie.dao.TheaterDAO;
+import org.movie.dto.MovieDTO;
 import org.movie.dto.ScreenDTO;
 import org.movie.dto.SeatDTO;
 import org.movie.dto.TheaterDTO;
 import org.movie.mapper.MovieMapper;
 import org.movie.service.TheaterService;
+import org.movie.util.DateUtil;
+import org.movie.vo.MovieVO;
 import org.movie.vo.TheaterVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class TheaterServiceImpl implements TheaterService {
@@ -34,6 +41,10 @@ public class TheaterServiceImpl implements TheaterService {
 	private SeatDao seatDao;
 	@Autowired
 	private MovieMapper movieMapper;
+	@Autowired
+	private MovieDAO movieDao;
+	@Autowired
+	private DateUtil dateUtil;
 
 	@Override
 	public List<TheaterVO> getTheaters() {
@@ -41,9 +52,9 @@ public class TheaterServiceImpl implements TheaterService {
 	}
 
 	@Override
-	public void addScreen() {
-		theaterDAO.findAll().forEach(t -> {
-			Arrays.asList(ScreenConstent.values()).forEach(s -> {
+	public void addScreen(MovieVO vo, TheaterDTO dto, List<ScreenConstent> screenContent) {
+		Arrays.asList(dto).forEach(t -> {
+			screenContent.forEach(s -> {
 
 				time().forEach((k, v) -> {
 					ScreenDTO screen = new ScreenDTO();
@@ -52,7 +63,10 @@ public class TheaterServiceImpl implements TheaterService {
 					screen.setScreenName(s.toString());
 					screen.setScreen(s);
 					screen.setShowProfile(k);
+					screen.setMovieId(vo.getId());
 					screen.setTime(v);
+					screen.setValidFrom(vo.getValidFrom());
+					screen.setValidTo(vo.getValidTo());
 					ScreenDTO screenSave = screenDao.save(screen);
 					genSeat(t, screenSave);
 				});
@@ -62,14 +76,21 @@ public class TheaterServiceImpl implements TheaterService {
 
 	private void genSeat(TheaterDTO t, ScreenDTO screen) {
 		List<SeatDTO> listOfSeatDTO = new ArrayList<>();
-		for (int i = 0; i < t.getSeatNumber(); i++) {
-			SeatDTO seatDto = new SeatDTO();
-			seatDto.setScreenId(screen);
-			seatDto.setSeatStatus(SeatStatus.SEAT_NOT_BOOKED.toString());
-			seatDto.setNumber(i);
-			setSeatType(i, seatDto);
-			listOfSeatDTO.add(seatDto);
+
+		for (long date = 0; date < dateUtil.getGapBetweenTwoDays(screen.getValidFrom(), screen.getValidTo()); date++) {
+			for (int i = 0; i < t.getSeatNumber(); i++) {
+				SeatDTO seatDto = new SeatDTO();
+				seatDto.setScreenId(screen);
+				seatDto.setSeatStatus(SeatStatus.SEAT_NOT_BOOKED.toString());
+				seatDto.setNumber(i);
+				seatDto.setBooked(Boolean.FALSE);
+				setSeatType(i, seatDto);
+				seatDto.setSlotDate(screen.getValidFrom().plusDays(date));
+				seatDto.setCreadtedDate(LocalDateTime.now());
+				listOfSeatDTO.add(seatDto);
+			}
 		}
+
 		seatDao.saveAll(listOfSeatDTO);
 
 	}
@@ -108,6 +129,21 @@ public class TheaterServiceImpl implements TheaterService {
 	@Override
 	public void addTheater(TheaterVO vo) throws Exception {
 		theaterDAO.save(movieMapper.thaterMapperVoToDto(vo));
+	}
+
+	@Override
+	public void addMovieToScreen(MovieVO vo) throws Exception {
+		Optional<TheaterDTO> theaterDto = theaterDAO.findById(vo.getTheaterId());
+		Optional<MovieDTO> dto = movieDao.findById(vo.getId());
+		List<ScreenConstent> screenContent = Arrays.asList(ScreenConstent.values()).stream()
+				.filter(s -> s.toString().equals(vo.getScreenName())).collect(Collectors.toList());
+
+		if (theaterDto.isPresent() && dto.isPresent() && !CollectionUtils.isEmpty(screenContent))
+			addScreen(vo, theaterDto.get(), screenContent);
+		else {
+			throw new Exception("Please pass valid data");
+		}
+
 	}
 
 }

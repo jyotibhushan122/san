@@ -6,7 +6,7 @@ import org.movie.vo.MovieVO;
 
 public interface MovieUploadService {
 
-	public void uploadMovie(MovieVO vo) throws Exception;
+	public long uploadMovie(MovieVO vo) throws Exception;
 
 	public List<MovieVO> getAllMovie();
 

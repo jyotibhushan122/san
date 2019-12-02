@@ -1,8 +1,5 @@
 package org.movie.controller;
 
-import java.util.Arrays;
-
-import org.movie.constent.ScreenConstent;
 import org.movie.service.MovieService;
 import org.movie.service.MovieUploadService;
 import org.movie.service.TheaterService;
@@ -14,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/admin_page")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MovieController {
 	private Logger logger = LoggerFactory.getLogger(MovieController.class);
 	@Autowired
@@ -38,9 +37,8 @@ public class MovieController {
 	public GateWayResponse<?> uploadlFileNew(@ModelAttribute MovieVO upld) {
 
 		try {
-			service.uploadMovie(upld);
 			logger.info("UPLOAD SUCCESS with referenece NUMBER [{}]");
-			return new GateWayResponse<>(Boolean.TRUE, HttpStatus.OK, "Upload success");
+			return new GateWayResponse<>(Boolean.TRUE, HttpStatus.OK, service.uploadMovie(upld));
 		} catch (Exception e) {
 			logger.info("Exception in FileUpload [{}]", e);
 			return new GateWayResponse<>(Boolean.FALSE, HttpStatus.BAD_REQUEST, e.getMessage());
@@ -72,35 +70,15 @@ public class MovieController {
 
 	}
 
-	@GetMapping("/mapTheaterTo")
-	public GateWayResponse<?> mapTheaterToIndex() {
-		theaterService.addScreen();
-		return new GateWayResponse<>(HttpStatus.OK, "add success");
-	}
-
-	@GetMapping("/getTheatre")
-	public GateWayResponse<?> getAllTheatres() {
+	@GetMapping("/mapMovieToScreen")
+	public GateWayResponse<?> mapTheaterToIndex(@RequestBody MovieVO vo) {
 		try {
-			return new GateWayResponse<>(HttpStatus.OK, theaterService.getTheaters(), "Upload success");
+			theaterService.addMovieToScreen(vo);
+			return new GateWayResponse<>(HttpStatus.OK, "add success");
 		} catch (Exception e) {
 			logger.info("Exception in addTheatres [{}]", e);
 			return new GateWayResponse<>(Boolean.FALSE, HttpStatus.BAD_REQUEST, e.getMessage());
 		}
-
-	}
-
-	@GetMapping("/screens")
-	public GateWayResponse<?> getScreene() {
-		return new GateWayResponse<>(HttpStatus.OK,
-				Arrays.asList(ScreenConstent.SCREEN1.toString(), ScreenConstent.SCRREN2.toString(),
-						ScreenConstent.SCREEN3.toString(), ScreenConstent.SCREEN4.toString()),
-				"success");
-	}
-
-	@GetMapping("/timings")
-	public GateWayResponse<?> getTimings() {
-		return new GateWayResponse<>(HttpStatus.OK, theaterService.time(), "success");
-
 	}
 
 	@GetMapping("/deleteMovie")

@@ -9,10 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 
+import org.movie.util.AuditModel;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity(name = "tbl_movie")
-public class MovieDTO implements Serializable {
+public class MovieDTO extends AuditModel implements Serializable {
 
 	/**
 	 * 

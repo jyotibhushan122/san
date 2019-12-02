@@ -1,6 +1,7 @@
 package org.movie.mapper;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 import org.movie.dto.MovieDTO;
@@ -22,7 +23,7 @@ public class MovieMapper {
 			dto.setData(vo.getImg().getBytes());
 			dto.setFileName(vo.getImg().getOriginalFilename());
 			dto.setFileContentType(vo.getImg().getContentType());
-
+			dto.setCreadtedDate(LocalDateTime.now());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,6 +34,7 @@ public class MovieMapper {
 	public MovieVO mapMovieDtoToVO(MovieDTO dto) {
 		MovieVO vo = new MovieVO();
 		BeanUtils.copyProperties(dto, vo);
+		vo.setData(dto.getData());
 		return vo;
 	}
 
