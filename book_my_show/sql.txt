@@ -1,0 +1,5 @@
+select count(case when t1.is_seat_booked=true then 1 else null end) as seat_booked ,
+count(case when t1.is_seat_booked=false then 1 else null end) as seat_not_booked,
+sum(case when t1.is_seat_booked=true then 1 else null end * t1.ammount) as total_revenue,
+sum(case when t1.is_seat_booked=false then 1 else null end * t1.ammount) as total_loss
+from tbl_seat t1 where t1.slot_date between '2019-02-02' AND '2019-12-09';

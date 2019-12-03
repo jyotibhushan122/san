@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.movie.constent.ScreenConstent;
+import org.movie.constent.TimeConstent;
 import org.movie.dto.TheaterDTO;
 import org.movie.vo.MovieVO;
 import org.movie.vo.ResponseVo;
@@ -14,7 +15,7 @@ public interface TheaterService {
 
 	List<TheaterVO> getTheaters();
 
-	public Map<String, String> time();
+	public Map<TimeConstent, String> time();
 
 	void addScreen(MovieVO vo, TheaterDTO dto, List<ScreenConstent> screenContent);
 

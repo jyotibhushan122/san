@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.movie.constent.ScreenConstent;
+import org.movie.constent.TimeConstent;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -59,7 +60,7 @@ public class ScreenDTO implements Serializable {
 	private long movieId;
 
 	private ScreenConstent screen;
-	private String showProfile;
+	private TimeConstent showProfile;
 	private String time;
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -127,12 +128,12 @@ public class ScreenDTO implements Serializable {
 		this.screen = screen;
 	}
 
-	public String getShowProfile() {
+	public TimeConstent getShowProfile() {
 		return showProfile;
 	}
 
-	public void setShowProfile(String showProfile) {
-		this.showProfile = showProfile;
+	public void setShowProfile(TimeConstent k) {
+		this.showProfile = k;
 	}
 
 	public String getTime() {

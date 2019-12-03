@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.movie.constent.ScreenConstent;
+import org.movie.constent.SeatStatus;
+import org.movie.constent.SeatType;
+import org.movie.constent.TimeConstent;
 import org.movie.util.AuditModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -30,7 +33,7 @@ public class SeatDTO extends AuditModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private int number;
-	private String seatType;
+	private SeatType seatType;
 	private String series;
 	private Integer ammount;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -38,25 +41,25 @@ public class SeatDTO extends AuditModel implements Serializable {
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private ScreenDTO screenId;
-	private String seatStatus;
+	private SeatStatus seatStatus;
 	private LocalDate slotDate;
 	@Column(name = "is_seat_booked")
 	private boolean isBooked;
 	private ScreenConstent screen;
-	private String showProfile;
+	private TimeConstent showProfile;
 
 	/**
 	 * @return the seatStatus
 	 */
-	public String getSeatStatus() {
+	public SeatStatus getSeatStatus() {
 		return seatStatus;
 	}
 
 	/**
-	 * @param seatStatus the seatStatus to set
+	 * @param seatNotBooked the seatStatus to set
 	 */
-	public void setSeatStatus(String seatStatus) {
-		this.seatStatus = seatStatus;
+	public void setSeatStatus(SeatStatus seatNotBooked) {
+		this.seatStatus = seatNotBooked;
 	}
 
 	public Long getId() {
@@ -75,12 +78,12 @@ public class SeatDTO extends AuditModel implements Serializable {
 		this.number = number;
 	}
 
-	public String getSeatType() {
+	public SeatType getSeatType() {
 		return seatType;
 	}
 
-	public void setSeatType(String seatType) {
-		this.seatType = seatType;
+	public void setSeatType(SeatType normal) {
+		this.seatType = normal;
 	}
 
 	public String getSeries() {
@@ -131,12 +134,12 @@ public class SeatDTO extends AuditModel implements Serializable {
 		this.screen = screen;
 	}
 
-	public String getShowProfile() {
+	public TimeConstent getShowProfile() {
 		return showProfile;
 	}
 
-	public void setShowProfile(String showProfile) {
-		this.showProfile = showProfile;
+	public void setShowProfile(TimeConstent timeConstent) {
+		this.showProfile = timeConstent;
 	}
 
 }

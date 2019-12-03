@@ -83,7 +83,7 @@ public class TheaterServiceImpl implements TheaterService {
 			for (int i = 0; i < t.getSeatNumber(); i++) {
 				SeatDTO seatDto = new SeatDTO();
 				seatDto.setScreenId(screen);
-				seatDto.setSeatStatus(SeatStatus.SEAT_NOT_BOOKED.toString());
+				seatDto.setSeatStatus(SeatStatus.SEAT_NOT_BOOKED);
 				seatDto.setNumber(i);
 				seatDto.setBooked(Boolean.FALSE);
 				setSeatType(i, seatDto);
@@ -102,29 +102,29 @@ public class TheaterServiceImpl implements TheaterService {
 	public void setSeatType(int i, SeatDTO seatDto) {
 		if (0 <= i && i < 10) {
 			seatDto.setSeries("A");
-			seatDto.setSeatType(SeatType.NORMAL.toString());
+			seatDto.setSeatType(SeatType.NORMAL);
 			seatDto.setAmmount(SeatType.NORMAL.getPrice());
 		} else if (11 <= i && i < 20) {
 			seatDto.setSeries("B");
-			seatDto.setSeatType(SeatType.EXECUTIVE.toString());
+			seatDto.setSeatType(SeatType.EXECUTIVE);
 			seatDto.setAmmount(SeatType.EXECUTIVE.getPrice());
 		} else if (21 <= i && i < 30) {
 			seatDto.setSeries("C");
-			seatDto.setSeatType(SeatType.PREMIUM.toString());
+			seatDto.setSeatType(SeatType.PREMIUM);
 			seatDto.setAmmount(SeatType.PREMIUM.getPrice());
 		} else {
 			seatDto.setSeries("D");
-			seatDto.setSeatType(SeatType.VIP.toString());
+			seatDto.setSeatType(SeatType.VIP);
 			seatDto.setAmmount(SeatType.VIP.getPrice());
 		}
 
 	}
 
 	@Override
-	public Map<String, String> time() {
-		Map<String, String> time = new HashMap<>();
+	public Map<TimeConstent, String> time() {
+		Map<TimeConstent, String> time = new HashMap<>();
 		Arrays.asList(TimeConstent.values()).forEach(r -> {
-			time.put(r.toString(), r.getStartTime() + " - " + r.getEndTime());
+			time.put(r, r.getStartTime() + " - " + r.getEndTime());
 		});
 
 		return time;
