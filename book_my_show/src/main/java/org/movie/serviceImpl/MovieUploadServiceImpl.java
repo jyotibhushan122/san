@@ -34,10 +34,10 @@ public class MovieUploadServiceImpl implements MovieUploadService {
 	}
 
 	@Override
-	public List<MovieVO> getAllMovie() {
+	public List<MovieVO> getAllMovie(String field) {
 		return movierepo.findAll().stream()
 				.filter(f -> dateUtil.getGapBetweenTwoDays(LocalDate.now(), f.getValidTo()) > 1)
-				.collect(Collectors.toList()).stream().map(m -> movieMapper.mapMovieDtoToVO(m))
+				.collect(Collectors.toList()).stream().map(m -> movieMapper.mapMovieDtoToVO(m, field))
 				.collect(Collectors.toList());
 	}
 

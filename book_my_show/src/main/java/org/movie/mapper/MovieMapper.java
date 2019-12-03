@@ -35,10 +35,12 @@ public class MovieMapper {
 		return dto;
 	}
 
-	public MovieVO mapMovieDtoToVO(MovieDTO dto) {
+	public MovieVO mapMovieDtoToVO(MovieDTO dto, String field) {
 		MovieVO vo = new MovieVO();
+
 		BeanUtils.copyProperties(dto, vo);
-		vo.setData(dto.getData());
+		if (field == null)
+			vo.setData(null);
 		return vo;
 	}
 

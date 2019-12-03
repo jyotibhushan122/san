@@ -47,10 +47,10 @@ public class MovieController {
 	}// getAllMovie
 
 	@GetMapping(value = "/getListOfMovie", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public GateWayResponse<?> getListOfMovie() {
+	public GateWayResponse<?> getListOfMovie(@RequestParam(name = "field", required = false) String field) {
 
 		try {
-			return new GateWayResponse<>(Boolean.TRUE, HttpStatus.OK, service.getAllMovie());
+			return new GateWayResponse<>(Boolean.TRUE, HttpStatus.OK, service.getAllMovie(field));
 		} catch (Exception e) {
 			logger.info("Exception in FileUpload [{}]", e);
 			return new GateWayResponse<>(Boolean.FALSE, HttpStatus.BAD_REQUEST, e.getMessage());
@@ -70,7 +70,7 @@ public class MovieController {
 
 	}
 
-	@GetMapping("/mapMovieToScreen")
+	@PostMapping("/mapMovieToScreen")
 	public GateWayResponse<?> mapTheaterToIndex(@RequestBody MovieVO vo) {
 		try {
 			theaterService.addMovieToScreen(vo);

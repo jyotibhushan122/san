@@ -8,7 +8,7 @@ public interface MovieUploadService {
 
 	public long uploadMovie(MovieVO vo) throws Exception;
 
-	public List<MovieVO> getAllMovie();
+	public List<MovieVO> getAllMovie(String field);
 
 	public void bookMovie();
 
