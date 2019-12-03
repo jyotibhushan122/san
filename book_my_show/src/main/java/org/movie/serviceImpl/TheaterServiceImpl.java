@@ -89,6 +89,8 @@ public class TheaterServiceImpl implements TheaterService {
 				setSeatType(i, seatDto);
 				seatDto.setSlotDate(screen.getValidFrom().plusDays(date));
 				seatDto.setCreadtedDate(LocalDateTime.now());
+				seatDto.setShowProfile(screen.getShowProfile());
+				seatDto.setScreen(screen.getScreen());
 				listOfSeatDTO.add(seatDto);
 			}
 		}
@@ -164,13 +166,13 @@ public class TheaterServiceImpl implements TheaterService {
 		List<ResponseVo> responseVo = new ArrayList<>();
 		dto.forEach(r -> {
 			ResponseVo response = new ResponseVo();
-			response.setVo(movieMapper.getMapScreenDtoToVo(r));
+			response.setScreen(movieMapper.getMapScreenDtoToVo(r));
 			List<SeatVo> seat = seatDto.stream().filter(f -> f.getScreenId().getId() == r.getId())
 					.map(m -> movieMapper.getMapSeatDtoToVo(m)).collect(Collectors.toList());
-			response.setSatVo(seat);
+			response.setSeatVo(seat);
 			responseVo.add(response);
 		});
-		return null;
+		return responseVo;
 	}
 
 }

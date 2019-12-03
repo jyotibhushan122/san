@@ -9,23 +9,25 @@ public class ResponseVo implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ScreenVO vo;
-	private List<SeatVo> satVo;
+	private ScreenVO screen;
+	private List<SeatVo> seatVo;
 
-	public ScreenVO getVo() {
-		return vo;
+	
+
+	public List<SeatVo> getSeatVo() {
+		return seatVo;
 	}
 
-	public void setVo(ScreenVO vo) {
-		this.vo = vo;
+	public void setSeatVo(List<SeatVo> seatVo) {
+		this.seatVo = seatVo;
 	}
 
-	public List<SeatVo> getSatVo() {
-		return satVo;
+	public ScreenVO getScreen() {
+		return screen;
 	}
 
-	public void setSatVo(List<SeatVo> satVo) {
-		this.satVo = satVo;
+	public void setScreen(ScreenVO screen) {
+		this.screen = screen;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.movie.constent.ScreenConstent;
-import org.movie.dto.ScreenDTO;
 import org.movie.dto.TheaterDTO;
 import org.movie.vo.MovieVO;
 import org.movie.vo.ResponseVo;

@@ -15,16 +15,16 @@ public class MovieServiceImpl implements MovieService {
 
 	@Autowired
 	private MovieMapper mapper;
-	
+
 	@Autowired
-	private MovieDAO movieDAO; 
-	
+	private MovieDAO movieDAO;
+
 	@Override
 	public void addMovie(MovieVO vo) {
 		MovieDTO dto = new MovieDTO();
 		dto = mapper.convertVO(vo);
 		movieDAO.save(dto);
-		
+
 	}
 
 	@Override
@@ -34,7 +34,5 @@ public class MovieServiceImpl implements MovieService {
 			movieDAO.delete(movie.get());
 		}
 	}
-	
-
 
 }

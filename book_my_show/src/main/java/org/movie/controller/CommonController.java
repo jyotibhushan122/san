@@ -1,16 +1,23 @@
 package org.movie.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.movie.constent.ScreenConstent;
 import org.movie.service.TheaterService;
 import org.movie.util.GateWayResponse;
+import org.movie.vo.MovieVO;
+import org.movie.vo.ResponseVo;
+import org.movie.vo.TheaterVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +32,10 @@ public class CommonController {
 	@GetMapping("/getTheatre")
 	public GateWayResponse<?> getAllTheatres() {
 		try {
-			return new GateWayResponse<>(HttpStatus.OK, theaterService.getTheaters(), "Upload success");
+			List<TheaterVO> list = theaterService.getTheaters();
+			return (CollectionUtils.isEmpty(list)) ? new GateWayResponse<>(HttpStatus.OK, "NO_CONTENT")
+					: new GateWayResponse<>(HttpStatus.OK, list, "Upload success");
+
 		} catch (Exception e) {
 			logger.info("Exception in addTheatres [{}]", e);
 			return new GateWayResponse<>(Boolean.FALSE, HttpStatus.BAD_REQUEST, e.getMessage());
@@ -43,6 +53,23 @@ public class CommonController {
 
 	@GetMapping("/timings")
 	public GateWayResponse<?> getTimings() {
+		return new GateWayResponse<>(HttpStatus.OK, theaterService.time(), "success");
+
+	}
+
+	// getScreenForBooked
+
+	@PostMapping("/getScreenForBooked")
+	public GateWayResponse<?> getScreenForBooked(@RequestBody MovieVO vo) {
+
+		try {
+			List<ResponseVo> response = theaterService.getScreenForBooked(vo);
+			return (CollectionUtils.isEmpty(response)) ? new GateWayResponse<>(HttpStatus.OK, "NO_CONTENT")
+					: new GateWayResponse<>(HttpStatus.OK, response, "Upload success");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new GateWayResponse<>(HttpStatus.OK, theaterService.time(), "success");
 
 	}

@@ -3,6 +3,7 @@ package org.movie.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.movie.constent.ScreenConstent;
 import org.movie.util.AuditModel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,7 +40,10 @@ public class SeatDTO extends AuditModel implements Serializable {
 	private ScreenDTO screenId;
 	private String seatStatus;
 	private LocalDate slotDate;
+	@Column(name = "is_seat_booked")
 	private boolean isBooked;
+	private ScreenConstent screen;
+	private String showProfile;
 
 	/**
 	 * @return the seatStatus
@@ -116,6 +121,22 @@ public class SeatDTO extends AuditModel implements Serializable {
 
 	public void setSlotDate(LocalDate slotDate) {
 		this.slotDate = slotDate;
+	}
+
+	public ScreenConstent getScreen() {
+		return screen;
+	}
+
+	public void setScreen(ScreenConstent screen) {
+		this.screen = screen;
+	}
+
+	public String getShowProfile() {
+		return showProfile;
+	}
+
+	public void setShowProfile(String showProfile) {
+		this.showProfile = showProfile;
 	}
 
 }

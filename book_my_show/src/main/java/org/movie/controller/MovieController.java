@@ -1,5 +1,7 @@
 package org.movie.controller;
 
+import java.util.List;
+
 import org.movie.service.MovieService;
 import org.movie.service.MovieUploadService;
 import org.movie.service.TheaterService;
@@ -11,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,7 +53,11 @@ public class MovieController {
 	public GateWayResponse<?> getListOfMovie(@RequestParam(name = "field", required = false) String field) {
 
 		try {
-			return new GateWayResponse<>(Boolean.TRUE, HttpStatus.OK, service.getAllMovie(field));
+			List<MovieVO> list = service.getAllMovie(field);
+
+			return (CollectionUtils.isEmpty(list)) ? new GateWayResponse<>(Boolean.TRUE, HttpStatus.OK, "NO_CONTENT")
+					: new GateWayResponse<>(Boolean.TRUE, HttpStatus.OK, list);
+
 		} catch (Exception e) {
 			logger.info("Exception in FileUpload [{}]", e);
 			return new GateWayResponse<>(Boolean.FALSE, HttpStatus.BAD_REQUEST, e.getMessage());
