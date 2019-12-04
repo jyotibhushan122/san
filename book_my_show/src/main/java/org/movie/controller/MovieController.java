@@ -7,6 +7,7 @@ import org.movie.service.MovieUploadService;
 import org.movie.service.TheaterService;
 import org.movie.util.GateWayResponse;
 import org.movie.vo.MovieVO;
+import org.movie.vo.SeatVo;
 import org.movie.vo.TheaterVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,6 +93,17 @@ public class MovieController {
 	public GateWayResponse<?> deleteMovie(@RequestParam("movieName") String movieName) {
 		movieService.deleteMovie(movieName);
 		return new GateWayResponse<>(HttpStatus.OK, "delete success");
+	}
+	
+	@PostMapping("/updateSeatStatus")
+	public GateWayResponse<?> updateStatus(@RequestBody MovieVO movieVo) {
+		try {
+			SeatVo seat = movieService.updateStatus(movieVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new GateWayResponse<>(HttpStatus.OK, "update success");
+		
 	}
 
 }

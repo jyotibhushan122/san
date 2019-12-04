@@ -47,6 +47,67 @@ public class SeatDTO extends AuditModel implements Serializable {
 	private boolean isBooked;
 	private ScreenConstent screen;
 	private TimeConstent showProfile;
+	private Long seatId;
+	private boolean bookedStatus;
+	private LocalDate bookedDate;
+	private String txId;
+	
+
+	/**
+	 * @return the txId
+	 */
+	public String getTxId() {
+		return txId;
+	}
+
+	/**
+	 * @param txId the txId to set
+	 */
+	public void setTxId(String txId) {
+		this.txId = txId;
+	}
+
+	/**
+	 * @return the bookedDate
+	 */
+	public LocalDate getBookedDate() {
+		return bookedDate;
+	}
+
+	/**
+	 * @param bookedDate the bookedDate to set
+	 */
+	public void setBookedDate(LocalDate bookedDate) {
+		this.bookedDate = bookedDate;
+	}
+
+	/**
+	 * @return the seatId
+	 */
+	public Long getSeatId() {
+		return seatId;
+	}
+
+	/**
+	 * @param seatId the seatId to set
+	 */
+	public void setSeatId(Long seatId) {
+		this.seatId = seatId;
+	}
+
+	/**
+	 * @return the bookedStatus
+	 */
+	public boolean isBookedStatus() {
+		return bookedStatus;
+	}
+
+	/**
+	 * @param bookedStatus the bookedStatus to set
+	 */
+	public void setBookedStatus(boolean bookedStatus) {
+		this.bookedStatus = bookedStatus;
+	}
 
 	/**
 	 * @return the seatStatus

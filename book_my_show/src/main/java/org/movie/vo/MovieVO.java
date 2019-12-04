@@ -37,6 +37,21 @@ public class MovieVO implements Serializable {
 	private String screenName;
 	private String slotTime;
 	private byte[] data;
+	private Long seatId;
+	/**
+	 * @return the seatId
+	 */
+	public Long getSeatId() {
+		return seatId;
+	}
+
+	/**
+	 * @param seatId the seatId to set
+	 */
+	public void setSeatId(Long seatId) {
+		this.seatId = seatId;
+	}
+
 	public LocalDate getValidFrom() {
 		return validFrom;
 	}

@@ -2,6 +2,7 @@ package org.movie.dao;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.movie.constent.QueryReport;
 import org.movie.dto.ScreenDTO;
@@ -17,4 +18,6 @@ public interface SeatDao extends CrudRepository<SeatDTO, SeatVo> {
 
 	@Query(value = QueryReport.REPORT_GEN, nativeQuery = true)
 	List<Object[]> genReport(LocalDate fromDate, LocalDate toDate);
+
+	Optional<SeatDTO> findBySeatId(Long seatId);
 }
