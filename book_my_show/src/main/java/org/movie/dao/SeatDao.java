@@ -14,10 +14,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SeatDao extends CrudRepository<SeatDTO, SeatVo> {
-	List<SeatDTO> findAllByScreenIdIn(List<ScreenDTO> dto);
+
+	List<SeatDTO> findAllByScreenIdInAndSlotDate(List<ScreenDTO> dto, LocalDate slotDate);
 
 	@Query(value = QueryReport.REPORT_GEN, nativeQuery = true)
 	List<Object[]> genReport(LocalDate fromDate, LocalDate toDate);
 
-	Optional<SeatDTO> findBySeatId(Long seatId);
+	Optional<SeatDTO> findById(Long id);
 }
