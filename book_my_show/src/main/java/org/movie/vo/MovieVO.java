@@ -2,6 +2,7 @@ package org.movie.vo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,20 +38,8 @@ public class MovieVO implements Serializable {
 	private String screenName;
 	private String slotTime;
 	private byte[] data;
-	private Long seatId;
-	/**
-	 * @return the seatId
-	 */
-	public Long getSeatId() {
-		return seatId;
-	}
-
-	/**
-	 * @param seatId the seatId to set
-	 */
-	public void setSeatId(Long seatId) {
-		this.seatId = seatId;
-	}
+	private List<Long> seatId;
+	private Long imgUrl;
 
 	public LocalDate getValidFrom() {
 		return validFrom;
@@ -124,13 +113,6 @@ public class MovieVO implements Serializable {
 		this.screenId = screenId;
 	}
 
-	@Override
-	public String toString() {
-		return "MovieVO [movieName=" + movieName + ", title=" + title + ", description=" + description + ", cast="
-				+ cast + ", theaterId=" + theaterId + ", screenId=" + screenId + ", img=" + img + ", validFrom="
-				+ validFrom + ", validTo=" + validTo + "]";
-	}
-
 	public String getScreenName() {
 		return screenName;
 	}
@@ -161,6 +143,30 @@ public class MovieVO implements Serializable {
 
 	public void setData(byte[] data) {
 		this.data = data;
+	}
+
+	public List<Long> getSeatId() {
+		return seatId;
+	}
+
+	public void setSeatId(List<Long> seatId) {
+		this.seatId = seatId;
+	}
+
+	public Long getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(Long imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+	@Override
+	public String toString() {
+		return "MovieVO [id=" + id + ", movieName=" + movieName + ", title=" + title + ", description=" + description
+				+ ", cast=" + cast + ", theaterId=" + theaterId + ", screenId=" + screenId + ", img=" + img
+				+ ", validFrom=" + validFrom + ", validTo=" + validTo + ", screenName=" + screenName + ", slotTime="
+				+ slotTime + ", data=" + Arrays.toString(data) + ", seatId=" + seatId + ", imgUrl=" + imgUrl + "]";
 	}
 
 }
